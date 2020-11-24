@@ -75,9 +75,12 @@ void gbc_convert_2x_scanline_grid(uint16_t* out_buf, uint16_t* in_buf,
         {
 
             uint32_t color = (uint32_t)bgr555_to_native_16(*(src + x));
-            uint32_t scanline_color = (color + (color & 0x7000)) >> 1;
 
+            uint32_t scanline_color = (color + (color & 0x7474)) >> 1;
+            //uint32_t next_offset = (x + 1) >= GBC_SCREEN_WIDTH ? 0 : (x + 1);
+            //uint32_t scanline_color = (uint32_t)bgr555_to_native_16(*(src + next_offset));
             scanline_color = (color + scanline_color + ((color ^ scanline_color) & 0x0421)) >> 1;
+
             // result = (X + Y - ((X ^ Y) & 0x0421)) >> 1;
             //scanline_color = (color + scanline_color - ((color ^ scanline_color) & 0x0421)) >> 1;
 
